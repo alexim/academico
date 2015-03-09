@@ -72,15 +72,16 @@
 	<bean id="LoginDAO" class="ec.com.webapplication.dao.impl.LoginDAO">
 		<property name="sessionFactory" ref="SessionFactory" />
 	</bean>
+	
 	<!-- ******************************** CLIENTE ********************************** -->
-	 <!-- Cliente Service Declaration -->
-<!-- 	<bean id="ClienteService" class="ec.com.webapplication.service.impl.ClienteService">
+	<!-- Cliente Service Declaration -->
+	<bean id="ClienteService" class="ec.com.webapplication.service.impl.ClienteService">
 		<property name="clienteDAO" ref="ClienteDAO" />
-	</bean>  -->
-	 <!-- Cliente DAO Declaration -->
-<!--	<bean id="ClienteDAO" class="ec.com.webapplication.dao.impl.ClienteDAO">
+	</bean>  
+	<!-- Cliente DAO Declaration -->
+	<bean id="ClienteDAO" class="ec.com.webapplication.dao.impl.ClienteDAO">
 		<property name="sessionFactory" ref="SessionFactory" />
-	</bean>  -->
+	</bean>  
 	
 	
 	<!-- Se define Transaction Manager -->

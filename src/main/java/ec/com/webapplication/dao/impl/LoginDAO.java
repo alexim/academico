@@ -3,7 +3,6 @@ package ec.com.webapplication.dao.impl;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import ec.com.webapplication.dao.ILoginDAO;
@@ -39,18 +38,17 @@ public class LoginDAO implements ILoginDAO{
      */
     @Override
     public Login getUserByUser(String user, String password) {
-    	List list = (List) getSessionFactory().getCurrentSession().createCriteria(Login.class)
-    													   .add(Restrictions.naturalId()
-    															.set("Usuario", "user")
-    															.set("Clave", "password"))
-														   .setCacheable(true)
-														   .uniqueResult();
-		/*List list = getSessionFactory().getCurrentSession()
+    	//List<Login> list = session.createCriteria(Login.class).list(); //Trae todos los registros de la tabla Login.
+		List list = getSessionFactory().getCurrentSession()
 									   .createQuery("from Login where Usuario=:user and Clave=:password")
 					                   .setString("user", user)
 					                   .setString("password", password)
-					                   .list();*/
-        return (Login)list.get(0);
+					                   .list();
+		if (list.isEmpty()){
+			 return null;
+		}else{
+			 return (Login)list.get(0);
+		}
     }
  
     /**

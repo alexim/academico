@@ -39,7 +39,7 @@
 	</script>
 </h:head>
 
-<h:body style="background-color:white;">
+<h:body style="background-color:white;" onload="#{loginBean.verificarSesion()}">
 <h:form>  
     <p:growl id="messages"/>  
     <p:menubar id="menubar">  
@@ -84,7 +84,7 @@
 		        <p:menuitem value="Pantalla completa" onclick="requestFullScreen(document.body); return true;" icon="ui-icon-newwin"/>    
 		        <p:menuitem value="Cambiar clave" actionListener="#{buttonBean.delete}" ajax="false" icon="ui-icon-close"/>  
 		        <p:separator />  
-		        <p:menuitem value="Cerrar sesión" url="/" icon="ui-icon-extlink"/>  
+		        <p:menuitem value="Cerrar sesión" icon="ui-icon-extlink" actionListener="#{loginBean.logout()}" />  
 		    </p:splitButton>   
         </f:facet>  
     </p:menubar>

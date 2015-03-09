@@ -39,7 +39,7 @@
 	</script>
 </h:head>
 
-<h:body>
+<h:body onload="#{loginBean.verificarSesionLogin()}">
 		<p:panel style="height: 760px; background-image: url('pages/login-fondo.jpg');">
 		  
 				<f:facet name="header">
@@ -47,7 +47,7 @@
 						<p:column style="width: 100%;" >
 							<h:form id="form2">
 								<span class="right">
-									<p:outputLabel value="SOA Application"/>
+									<p:outputLabel value="Sistema para la Digitalización de Documentos"/>
 									<h:commandButton id="topBtn" onclick="requestFullScreen(document.body); return false;"
 									 image="/images/login-fullscreen.png" style="height: 15px; float:right;" />
 								</span>

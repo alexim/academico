@@ -24,18 +24,6 @@ public class Clientes {
 	private Date ingreso;
 	private Estado estado = Estado.ACTIVO;
 	
-	public Clientes(long idCliente, String nombre, String identificacion,
-			String direccion, Date ingreso, Estado estado) {
-		this.idCliente = idCliente;
-		this.nombre = nombre;
-		this.identificacion = identificacion;
-		this.direccion = direccion;
-		this.ingreso = ingreso;
-		this.estado = estado;
-	}
-	
-	public Clientes() {	}
-	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCliente", unique = true, nullable = false)

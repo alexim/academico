@@ -11,13 +11,14 @@ import javax.faces.context.FacesContext;
 import ec.com.webapplication.globals.VariablesGlobales.Estado;
 import ec.com.webapplication.model.Login;
 import ec.com.webapplication.service.ILoginService;
+import ec.com.webapplication.security.FacesUtils;
 
 /**
  *
  * @author Alexi
  */
 @ManagedBean(name="loginBean")
-@ RequestScoped
+@RequestScoped
 public class LoginBean implements Serializable{  
 
     /**
@@ -29,7 +30,8 @@ public class LoginBean implements Serializable{
 	@ManagedProperty(value="#{LoginService}")
     ILoginService loginService;
 	Login login;
-    
+	FacesUtils facesUtils;
+	
     private String user;
 	private String password;
 	private Estado estado = Estado.ACTIVO;
@@ -76,32 +78,56 @@ public class LoginBean implements Serializable{
 		this.login = login;
 	}  
 	
-	public void login() {  
-        //RequestContext context = RequestContext.getCurrentInstance();  
-        FacesMessage msg = null;  
-        //boolean loggedIn = false;  
-
+	public void login() {   
+		FacesContext context = FacesContext.getCurrentInstance();
         try{
         	this.getLogin();
-	      //  if (this.getUser().equals("ADMIN") && (this.getPassword() != null || !this.getPassword().equals(""))) {
-        	if (login != null) {
-	        	FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("USUARIO", user);
-	            //loggedIn = true;  
-	            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Inciando sesión", user);
-	            FacesContext.getCurrentInstance().addMessage(null, msg);
-	            FacesContext.getCurrentInstance().getExternalContext().redirect("pages/principal.jsf");
-	        } else {  
-	            //loggedIn = false;  
-	            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error al iniciar sesión", "Credenciales Incorrectas");
-	            FacesContext.getCurrentInstance().addMessage(null, msg);
+        	if (login.getUsuario().equals(this.getUser())){
+        		//facesUtils.setSessionMapValue(context,"USUARIO",user);
+        		context.getExternalContext().getSessionMap().put("USUARIO", this.getUser());
+        		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Inciando sesión",this.getUser()));
+        		context.getExternalContext().redirect("pages/principal.jsf");
+	        } else {   
+	        	context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error al iniciar sesión", "Credenciales Incorrectas"));
 	        }  
-	 
-	        /*FacesContext.getCurrentInstance().addMessage(null, msg);
-	        context.addCallbackParam("loggedIn", loggedIn);  */
         }catch(Exception e){
-        	
+        	context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.toString(),"¡Error!" ));
         }
-        
-       
     }
+	
+	 public void logout() {  
+		 FacesMessage msg = null;
+		 FacesContext context = FacesContext.getCurrentInstance();
+     	try{
+     		//facesUtils.removeSessionMapValue(context, "USUARIO");
+     		context.getExternalContext().getSessionMap().remove("USUARIO");
+     		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cerrando sesión", this.getUser());
+     		context.getExternalContext().redirect("/webapplication/");
+     	}catch(Exception e){
+        	msg = new FacesMessage(FacesMessage.SEVERITY_WARN, e.toString(), "¡Error!");
+        }
+     	context.addMessage(null, msg);
+     }
+	 
+	 public void verificarSesion(){
+		 FacesContext context = FacesContext.getCurrentInstance();
+		 try{
+			 if (context.getExternalContext().getSessionMap().get("USUARIO")==null){
+				 context.getExternalContext().redirect("/webapplication/");
+			 }
+		 }catch(Exception e){
+        	 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.toString(),"¡Error!" ));
+         }
+	 }
+	 
+	 public void verificarSesionLogin(){
+		 FacesContext context = FacesContext.getCurrentInstance();
+		 try{
+			 if (context.getExternalContext().getSessionMap().get("USUARIO")!=null){
+				 context.getExternalContext().redirect("pages/principal.jsf");
+			 }
+		 }catch(Exception e){
+        	 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.toString(),"¡Error!" ));
+         }
+	 }
 }

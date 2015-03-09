@@ -45,35 +45,35 @@
 			</p:toolbarGroup>  
 		</p:toolbar>   
 		
-		<p:dataTable var="car" value="#{tableBean.cars}" rowKey="#{car.model}" paginator="true" rows="15"  
-                 selection="#{tableBean.selectedCar}" selectionMode="single" filteredValue="#{tableBean.filteredCars}" 
+		<p:dataTable var="cli" value="#{clienteBean.clientesList}"  paginator="true" rows="15"  
+                selectionMode="single" 
                  id="carsTable" rowsPerPageTemplate="15, 30, 45" 
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">  
   		<f:facet name="header">  
-          <h:outputText value="Basic Message Table"/>  
-          <h:outputText value="-As At Date-"/>  
+          <h:outputText value=""/>  
+          <h:outputText value=""/>  
           <h:outputText value="#{messageTableController.currentDate}">  
              <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  
           </h:outputText>  
      </f:facet>  
         <f:facet name="header">  
-            List of Cars  
+            Lista de Clientes
         </f:facet>  
   
-        <p:column headerText="Model" sortBy="model" filterBy="model" id="model">  
-            #{car.model}  
+        <p:column headerText="IdCliente" sortBy="idCliente" filterBy="idCliente" id="idCliente">  
+            #{cli.idCliente}  
         </p:column>  
   
-        <p:column headerText="Year" sortBy="year" filterBy="year" id="year">  
-            #{car.year}  
+        <p:column headerText="Nombre" sortBy="nombre" filterBy="nombre" id="nombre">  
+            #{cli.nombre}  
         </p:column>  
   
-        <p:column headerText="Manufacturer" sortBy="manufacturer" filterBy="manufacturer" id="manufacturer">  
-            #{car.manufacturer}  
+        <p:column headerText="Direccion" sortBy="direccion" filterBy="direccion" id="direccion">  
+            #{cli.direccion}  
         </p:column>  
   
-        <p:column headerText="Color" sortBy="color" filterBy="color" id="color">  
-            #{car.color}"  
+        <p:column headerText="Identificacion" sortBy="identificacion" filterBy="identificacion" id="identificacion">  
+            #{cli.identificacion}"  
         </p:column>  
   
     </p:dataTable>  
